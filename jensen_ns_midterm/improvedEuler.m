@@ -1,11 +1,11 @@
-function [t, y] = improvedEuler(f,h,t0,tFinal,y0)
+function [t, y] = improvedEuler(f,h,t0,y0)
 % f(t, y) = y'
 % h is step size
 % t0 is inital time
-% tfinal is final time
 % y0 = y(t0) initial condition
     
-    
+    % [NOTE: This code is adapted from my working IE with tFinal removed and
+    % steps = 1]
     [m,n] = size(y0);
     
     if m < n
@@ -15,12 +15,8 @@ function [t, y] = improvedEuler(f,h,t0,tFinal,y0)
     % (1-0)/.1 = 10 [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.0]
     % (.95-0)/.1 = 9.5 [.1,.2,.3,.4,.5,.6,.7,.8,.9,.95]
     % (1.05-0)/.1 = 10.5 [.1,.2,.3,.4,.5,.6,.7,.8,.9,1.0,1.05]
-    steps = ceil((tFinal - t0) / h); % get the number of steps in the process
+    steps = 1;
     
-    % If there is only 1 step make sure h is appropriately sized
-    if steps == 1
-        h = tFinal-t0;
-    end
     
     % Set the current time and current y value to be the initial condition
     tCur = t0;
@@ -38,7 +34,6 @@ function [t, y] = improvedEuler(f,h,t0,tFinal,y0)
     
     
     for i = 1:steps
-        h = min(h, tFinal-tCur);
         tNext = tCur+h;
         % ---Formula---
         % y~(n+1) = y(n) + h f(t(n),y(n))
@@ -52,5 +47,6 @@ function [t, y] = improvedEuler(f,h,t0,tFinal,y0)
         yCur = yNext;
         
     end
-    
+    t = t(end,1);
+    y = y(end,:);
 end

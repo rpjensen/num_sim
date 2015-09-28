@@ -1,12 +1,9 @@
-function [t y] = forwardEuler(f,h,t0,tfinal,y0)
-
+function [t y] = forwardEuler(f,h,t0,y0)
+    % [NOTE: This code is adapted from your working FE with tFinal removed and
+    % steps = 1]
+    
     % let's create t first
-    t = (t0:h:tfinal)';
-    % if tfinal is not divisible by h, the last element in t will
-    % be smaller than tfinal, so append tfinal:
-    if (t(end)<tfinal)
-        t=[t; tfinal];
-    end
+    t = [t0 t0+h]';
     
     if (length(t)==1)
        error('Invalid h, t0, and/or tfinal: no steps executed') 
@@ -37,5 +34,8 @@ function [t y] = forwardEuler(f,h,t0,tfinal,y0)
         ynew = yold + h*f(t(i-1),yold);
         y=[y;ynew'];
     end
+    
+    t = t(end,1);
+    y = y(end,:);
 
 end
