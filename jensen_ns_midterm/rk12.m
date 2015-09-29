@@ -8,6 +8,7 @@ y = y0;% init y
 
 T = times;% output T
 Y = zeros(length(T), 1);% output Y (1 to 1 with T)
+Y(1) = y;
 stepSizes = zeros(1,2);% (ti,hi) pairs for each accepted step (dynmaic size)
 
 timeCounter = 2;% the index into the time array
