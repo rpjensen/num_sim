@@ -1,15 +1,39 @@
 % Ryan Jensen
 % CSCI 373
 % Prof. Sanft
-% Homework 3
+% Midterm 1
 
-%% Problem 1
-% See: improvedEuler.m
+%% Problem 3
+% See: rk12.m
 
 
-%% Problem 2
+%% Problem 3.a
 clc
 
+dy = @(t,y) y*(1-y/10);
+y0 = 2;
+TOL = 1e-4;
+t = 0:0.2:20;
+
+[t,y,steps] = rk12(dy, t,y0,TOL);
+
+%% Exact-ish
+odeTOL = 1e-7;
+options = odeset('RelTol', odeTOL, 'AbsTol', odeTOL);
+[tEx, yEx] = ode45(dy, t, y0, options);
+
+%% 3.b
+
+close ALL;
+ 
+
+figure
+plot(t, yEx, 'k-', t, y, 'r--');
+
+legend('ode45', 'rk12');
+
+
+%%
 yEx = @(t) 1000*exp(0.1*t);
 dy = @(t,y) .1*y;
 y0 = 1000;
