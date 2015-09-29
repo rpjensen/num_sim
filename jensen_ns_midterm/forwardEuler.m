@@ -1,41 +1,21 @@
-function [t y] = forwardEuler(f,h,t0,y0)
-    % [NOTE: This code is adapted from your working FE with tFinal removed and
-    % steps = 1]
+function [y] = forwardEuler(f,h,t0,y0)
+% f(t, y) = y'
+% h is step size
+% t0 is inital time
+% y0 = y(t0) initial condition
     
-    % let's create t first
-    t = [t0 t0+h]';
+    [m,n] = size(y0);
     
-    if (length(t)==1)
-       error('Invalid h, t0, and/or tfinal: no steps executed') 
-    end
-    
-    % if y0 is a row vector, make it a column vector
-    if (isrow(y0))
+    if m < n
        y0 = y0'; 
     end
-    % check if valid
-    if ~iscolumn(y0)
-        error('Invalid input vector y0');
-    end
-    % y0 is a COLUMN vector but we want to store as rows in output
-    % matrix y
-    y=y0';
     
-    % try one step
-%     yold = y(1,:)';% make column vector for notational consistency
-%     h = t(2)-t(1);
-%     ynew = yold + h*f(0,yold);
-%     y=[y;ynew']
-
-    %loop
-    for i=2:length(t)
-        yold = y(i-1,:)';% make column vector for notational consistency
-        h = t(i)-t(i-1);
-        ynew = yold + h*f(t(i-1),yold);
-        y=[y;ynew'];
-    end
     
-    t = t(end,1);
-    y = y(end,:);
+    t1 = t0+h;
+    % ---Formula---
+    % y(n+1) = y(n) + h f(t(n),y(n))
+    y1 = y0 + h .* f(t0, y0); 
+    
+    y = y1;
 
 end
