@@ -2,6 +2,8 @@ function [ T, Y, stepSizes ] = rk12( f, times, y0, TOL )
 
 LOW_TOL = 0.8*TOL;% the bound at which we increase h
 
+TIME_TOL = 1e-6;
+
 h = (times(end)-times(1))/20;% init step size
 t = times(1);% init t
 y = y0;% init y
@@ -37,14 +39,14 @@ while (t < times(end))
         t = t+h;
         y = ie;
         
-        if t == times(timeCounter)
+        if abs(t - times(timeCounter)) < TIME_TOL
            % need to record the value we found since this is at one of our
            % fence posts
            Y(timeCounter) = y;
+           t = times(timeCounter);
            timeCounter = timeCounter + 1;
         end
-        
-        if h < LOW_TOL
+        if err < LOW_TOL
             % really good step, make h a little bigger
             h = h * sqrt(TOL/err);
         end

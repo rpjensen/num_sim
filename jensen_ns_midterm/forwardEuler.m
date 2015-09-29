@@ -11,7 +11,6 @@ function [y] = forwardEuler(f,h,t0,y0)
     end
     
     
-    t1 = t0+h;
     % ---Formula---
     % y(n+1) = y(n) + h f(t(n),y(n))
     y1 = y0 + h .* f(t0, y0); 
