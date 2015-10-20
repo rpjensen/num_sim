@@ -40,7 +40,7 @@ while tCur < tFinal
     j = 0;
     while jSum < r && j < length(p)
         j = j + 1;
-        jSum = jSum + p(j)
+        jSum = jSum + p(j);
     end
     
     
@@ -52,6 +52,8 @@ while tCur < tFinal
         % Update output
         T = [T tCur];
         S = [S; x'];
+    else
+        break;
     end
         
 end
