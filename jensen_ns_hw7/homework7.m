@@ -17,6 +17,7 @@ nu = -1;
 
 
 %% Checking my work area against the exppdf normalized for the inital population
+close ALL;
 figure;
 plot(T, Y, 'k-')
 hold on;
