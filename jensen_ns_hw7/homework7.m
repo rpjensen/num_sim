@@ -19,7 +19,7 @@ nu = -1;
 %% Checking my work area against the exppdf normalized for the inital population
 close ALL;
 figure;
-plot(T, Y, 'k-')
+stairs(T, Y, 'k-')
 hold on;
 mu = 2;
 t = 0:.01:15;
@@ -30,13 +30,7 @@ plot(t, x0*mu*exppdf(t, mu), 'b-');
 close ALL;
 
 figure
-steps = 100:-1:0;
-% Typically we need zero to appear twice since the times were stretch to 15
-% seconds always
-if length(steps) < length(T)
-    steps = [steps 0];
-end
-stairs(T,steps);
+stairs(T,Y);
 xlim([0 max(T)*1.1]);
 
 
@@ -69,7 +63,9 @@ legend('substrate', 'product');
 
 [tZoom, yZoom] = partIIIZoom(T, Y);
 figure
-plot(tZoom, yZoom(:,1), 'g-', tZoom, yZoom(:,4), 'r-');
+stairs(tZoom, yZoom(:,1), 'g-');
+hold on;
+stairs(tZoom, yZoom(:,4), 'r-');
 legend('substrate', 'product');
 
 
@@ -90,8 +86,8 @@ x0(2) = round(2e-7*nA*vol); % molecules of enzyme
 [T, Y] = ssa(x0, @mMenten2, nu, tFinal);
 
 % Part i
-% I got 1744 Rows for the run with a higher volume
-% For Part b I got 594 rows
+% I got 1744 Rows (time points/reaction count) for the run with a higher volume
+% For Part b I got 594 (time points/reaction count) rows
 
 close ALL;
 % Part ii

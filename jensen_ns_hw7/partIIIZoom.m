@@ -1,4 +1,6 @@
 function [ TZoom, YZoom ] = partIIIZoom( T, Y )
+% Find the intersection point of the substrate and product then return the
+% T,Y values within +- spread of the intersection point
 spread = 1.5;
 
 time = 0;
