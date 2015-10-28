@@ -39,100 +39,37 @@ close ALL;
 
 % figure;
 % plot(T, P(:,1), 'k-', T, P(:,2), 'b-', T, P(:,3), 'r-', T, P(:,4), 'g-', T, P(:,5), 'c-', T, P(:,6), 'y-', T, P(:,7), 'm-');
+% ylim([0 1.2]);
+% 
 % legend('P1', 'P2', 'P3', 'P4', 'P5', 'P6', 'P7');
 
 
 %% Problem 1.e
 clc;
-means = P * S';
+mu = P * S';
+std = sqrt(P * (S' .* S') - (mu.*mu));
 
 
-%% Problem 1.a
-clc;
-propensityFunction = @(x) .5*x(1);
-
-x0 = 100;
-tFinal = 15;
-nu = -1;
-
-[T, Y] = ssa(x0, propensityFunction, nu, tFinal);
-
-
-%% Checking my work area against the exppdf normalized for the inital population
 close ALL;
-figure;
-stairs(T, Y, 'k-')
+figure
+plot(T, mu(:,1), 'k-', T, mu(:,2), 'b-', T, mu(:,3), 'r-', T, mu(:,4), 'g-');
+upper = mu+std;
+lower = mu-std;
+
 hold on;
-mu = 2;
-t = 0:.01:15;
-plot(t, x0*mu*exppdf(t, mu), 'b-');
-
-%% Graph for 1.a
-
-close ALL;
-
-figure
-stairs(T,Y);
-xlim([0 max(T)*1.1]);
-
-
-%% Problem 1.b
-% See mMenten1.m
-clc;
-nu = [[-1 -1 1 0]', [1 1 -1 0]', [0 1 -1 1]'];
-%%%%%%%%%% Parameters and Initial Conditions %%%%%%%%% 
-nA = 6.023e23; % Avagadro?s number
-vol = 1e-15; % volume of system
-tFinal = 50;
-
-x0 = zeros(4,1);
-x0(1) = round(5e-7*nA*vol); % molecules of substrate
-x0(2) = round(2e-7*nA*vol); % molecules of enzyme
-
-[T, Y] = ssa(x0, @mMenten1, nu, tFinal);
-
-close ALL;
-% Part i
-figure;
-plot(T, Y(:,1), 'g-', T, Y(:,2), 'b-', T, Y(:,3), 'k-', T, Y(:,4), 'r-');
-legend('s1', 's2', 's3', 's4');
-% Part ii
-figure
-plot(T, Y(:,1), 'g-', T, Y(:,4), 'r-');
-legend('substrate', 'product');
-
-% Part iii
-
-[tZoom, yZoom] = partIIIZoom(T, Y);
-figure
-stairs(tZoom, yZoom(:,1), 'g-');
+plot(T, upper(:,1), 'k--', T, upper(:,2), 'b--', T, upper(:,3), 'r--', T, upper(:,4), 'g--');
 hold on;
-stairs(tZoom, yZoom(:,4), 'r-');
-legend('substrate', 'product');
+plot(T, lower(:,1), 'k--', T, lower(:,2), 'b--', T, lower(:,3), 'r--', T, lower(:,4), 'g--');
+ylim([0 3.5]);
+legend('P1', 'P2', 'P3', 'P4');
+
+%% Problem 1.f
+% The limit of x2 as t--> inf is 1
+% The probability of state 7: [0 1 0 3] is 1 as t--> inf and x2 = 1 in that
+% state so the limit as t--> inf of x2 is just the value in that state.
+
+
+%% Problem 2.a
 
 
 
-%% Problem 1.c
-% See mMenten2.m
-clc;
-nu = [[-1 -1 1 0]', [1 1 -1 0]', [0 1 -1 1]'];
-%%%%%%%%%% Parameters and Initial Conditions %%%%%%%%% 
-nA = 6.023e23; % Avagadro?s number
-vol = 3e-15; % volume of system
-tFinal = 50;
-
-x0 = zeros(4,1);
-x0(1) = round(5e-7*nA*vol); % molecules of substrate
-x0(2) = round(2e-7*nA*vol); % molecules of enzyme
-
-[T, Y] = ssa(x0, @mMenten2, nu, tFinal);
-
-% Part i
-% I got 1744 Rows (time points/reaction count) for the run with a higher volume
-% For Part b I got 594 (time points/reaction count) rows
-
-close ALL;
-% Part ii
-figure;
-plot(T, Y(:,1), 'g-', T, Y(:,2), 'b-', T, Y(:,3), 'k-', T, Y(:,4), 'r-');
-legend('s1', 's2', 's3', 's4');
