@@ -69,7 +69,14 @@ legend('P1', 'P2', 'P3', 'P4');
 % state so the limit as t--> inf of x2 is just the value in that state.
 
 
+%%
 %% Problem 2.a
+% See written work
+clc;
+% Matlab answer check
+mean([4 3 11 2])
+var([4 3 11 2])
 
 
-
+%% Problem 2.b
+clc;
