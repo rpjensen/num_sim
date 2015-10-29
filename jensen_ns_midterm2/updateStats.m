@@ -11,7 +11,7 @@ for iSam = 1:length(tSam)
     end
 
     % Trajectory data just before the sample time
-    newVal = xTra(min(iTra-1, 1), :);
+    newVal = xTra(max(iTra-1, 1), :);
 
 
     % Statitics isolated for this time val to simplify calulations
@@ -19,9 +19,10 @@ for iSam = 1:length(tSam)
     m1 = M1(iSam, :);
     s1 = S1(iSam, :);
     if run > 1
+        
         mTemp = m1;% reference m1 (old) before we override it with new val
         m1 = m0 + (newVal-m0)/ run;
-        s1 = s1 + (newVal-m0)*(newVal-m1);
+        s1 = s1 + (newVal-m0).*(newVal-m1);
 
         if run > 2
             m0 = mTemp;
