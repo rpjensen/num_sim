@@ -79,4 +79,30 @@ var([4 3 11 2])
 
 
 %% Problem 2.b
+% ssaStats.m
+
+%% Problem 2.c
 clc;
+
+nu = [[-1 1]', [1 -1]'];
+
+x0 = [100, 0]';
+T = 0:50;
+realizations = 1000;
+
+[T, xMean, xVar] = ssaStats(x0,@A2 ,nu,T,realizations);
+xStd = sqrt(xVar);
+
+close all;
+figure;
+plot(T, xMean(:,1), 'b-', T, xMean(:,2), 'r-');
+upper = xMean+xStd;
+lower = xMean-xStd;
+
+hold on;
+plot(T, upper(:,1), 'b--', T, upper(:,2), 'r--');
+hold on;
+plot(T, lower(:,1), 'b--', T, lower(:,2), 'r--');
+ylim([0 max(max(upper))]);
+legend('X1', 'X2');
+
