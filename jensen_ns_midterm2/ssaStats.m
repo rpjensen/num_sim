@@ -11,8 +11,8 @@ S1 = zeros(length(T), length(x0));
 
 tSam = T;
 for run = 1:realizations
-    if mod(run, 10) == 0
-        fprinf('Just finished run %g, %g%% of the way done.\n', run, 100*run/realizations);
+    if mod(run, 10) == 1
+        fprintf('Just finished run %g, %g%% of the way done.\n', run, 100*run/realizations);
     end
     [tTra, xTra] = ssa(x0, a, nu, outTimes(end)');
     
@@ -22,7 +22,10 @@ for run = 1:realizations
     
 end
 
+if realizations == 1
+    M1 = M0;
+end
 xMean = M1;
-xVar = S1;
+xVar = S1./realizations;
 end
 

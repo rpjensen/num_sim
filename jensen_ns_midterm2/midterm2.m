@@ -89,10 +89,12 @@ nu = [[-1 1]', [1 -1]'];
 x0 = [100, 0]';
 T = 0:50;
 realizations = 1000;
-
+% Really long process
 [T, xMean, xVar] = ssaStats(x0,@A2 ,nu,T,realizations);
+
 xStd = sqrt(xVar);
 
+%% Short process (graph)
 close all;
 figure;
 plot(T, xMean(:,1), 'b-', T, xMean(:,2), 'r-');
@@ -105,4 +107,17 @@ hold on;
 plot(T, lower(:,1), 'b--', T, lower(:,2), 'r--');
 ylim([0 max(max(upper))]);
 legend('X1', 'X2');
+
+%% Problem 2.d
+realizations = 1;
+% Really long process
+[TD, xMeanD, xVarD] = ssaStats(x0,@A2 ,nu,T,realizations);
+
+xStdD = sqrt(xVarD);
+
+%% Short process
+hold on;
+plot(TD, xMeanD(:,1), 'g-', TD, xMeanD(:,2), 'k-');
+
+
 
