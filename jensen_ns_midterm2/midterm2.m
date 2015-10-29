@@ -37,6 +37,7 @@ clc
 [T,P] = ode45(@RHS, 0:.5:50, [1 0 0 0 0 0 0]');
 close ALL;
 
+%% Cool Little plot to check the probability matrix is working
 % figure;
 % plot(T, P(:,1), 'k-', T, P(:,2), 'b-', T, P(:,3), 'r-', T, P(:,4), 'g-', T, P(:,5), 'c-', T, P(:,6), 'y-', T, P(:,7), 'm-');
 % ylim([0 1.2]);
@@ -69,7 +70,7 @@ legend('P1', 'P2', 'P3', 'P4');
 % state so the limit as t--> inf of x2 is just the value in that state.
 
 
-%%
+
 %% Problem 2.a
 % See written work
 clc;
@@ -89,7 +90,7 @@ nu = [[-1 1]', [1 -1]'];
 x0 = [100, 0]';
 T = 0:50;
 realizations = 1000;
-% Really long process
+% Really really long process
 [T, xMean, xVar] = ssaStats(x0,@A2 ,nu,T,realizations);
 
 xStd = sqrt(xVar);
@@ -110,7 +111,7 @@ legend('X1', 'X2');
 
 %% Problem 2.d
 realizations = 1;
-% Really long process
+
 [TD, xMeanD, xVarD] = ssaStats(x0,@A2 ,nu,T,realizations);
 
 xStdD = sqrt(xVarD);
@@ -119,5 +120,61 @@ xStdD = sqrt(xVarD);
 hold on;
 plot(TD, xMeanD(:,1), 'g-', TD, xMeanD(:,2), 'k-');
 
+%% Problem 2.e
+clc;
+
+nu = [[-1 -1 1 0]', [1 1 -1 0]', [0 1 -1 1]'];
+
+x0E = [3, 1, 0, 0]';
+TE = 0:50;
+realizations = 1000;
+
+[TE, xMeanE, xVarE] = ssaStats(x0E,@mMenten2 ,nu,TE,realizations);
+
+xStdE = sqrt(xVarE);
+%% Old code from previous problem 1 all in one section now
+clc
+S = [[3 1 0 0]', [2 0 1 0]', [2 1 0 1]', [1 0 1 1]', [1 1 0 2]', [0 0 1 2]', [0 1 0 3]'];
+
+[T1,P] = ode45(@RHS, 0:.5:50, [1 0 0 0 0 0 0]');
+close ALL;
+
+clc;
+mu = P * S';
+std = sqrt(P * (S' .* S') - (mu.*mu));
 
 
+close ALL;
+figure
+plot(T1, mu(:,1), 'k-', T1, mu(:,2), 'b-', T1, mu(:,3), 'r-', T1, mu(:,4), 'g-');
+upper1 = mu+std;
+lower1 = mu-std;
+
+hold on;
+plot(T1, upper1(:,1), 'k--', T1, upper1(:,2), 'b--', T1, upper1(:,3), 'r--', T1, upper1(:,4), 'g--');
+hold on;
+plot(T1, lower1(:,1), 'k--', T1, lower1(:,2), 'b--', T1, lower1(:,3), 'r--', T1, lower1(:,4), 'g--');
+ylim([0 3.5]);
+legend('P1', 'P2', 'P3', 'P4');
+
+%% Graph using ssa stats
+lineS = 2;
+hold on;
+plot(TE, xMeanE(:,1), 'k-', 'LineWidth', lineS);
+plot(TE, xMeanE(:,2), 'b-', 'LineWidth', lineS);
+plot(TE, xMeanE(:,3), 'r-', 'LineWidth', lineS);
+plot(TE, xMeanE(:,4), 'g-', 'LineWidth', lineS);
+upper = xMeanE+xStdE;
+lower = xMeanE-xStdE;
+
+hold on;
+plot(TE, upper(:,1), 'k--', 'LineWidth', lineS);
+plot(TE, upper(:,2), 'b--', 'LineWidth', lineS);
+plot(TE, upper(:,3), 'r--', 'LineWidth', lineS);
+plot(TE, upper(:,4), 'g--', 'LineWidth', lineS);
+hold on;
+plot(TE, lower(:,1), 'k--', 'LineWidth', lineS);
+plot(TE, lower(:,2), 'b--', 'LineWidth', lineS);
+plot(TE, lower(:,3), 'r--', 'LineWidth', lineS);
+plot(TE, lower(:,4), 'g--', 'LineWidth', lineS);
+ylim([0 max(max(upper))]);
