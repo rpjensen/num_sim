@@ -26,6 +26,6 @@ if realizations == 1
     M1 = M0;
 end
 xMean = M1;
-xVar = S1./realizations;
+xVar = S1./(min(realizations-1, 1));
 end
 
