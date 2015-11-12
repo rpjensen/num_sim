@@ -39,6 +39,11 @@ while tCur < tFinal
         pCR0 = pCR0 + pAll(crI(i));
     end
     
+    if isempty(ncrI)
+        tauPrime = Inf;
+    else
+        tauPrime = getTauPrime(x, pAll, nu, ncrI, e, g);
+    end
     
     % Zero propensity sum --> No reaction possible, population constant for
     % all t
