@@ -98,7 +98,7 @@ while tCur < tFinal
     
     k = zeros(length(pAll), 1);
     for j = 1:length(ncrI)
-        k(ncrI(j)) = pAll(ncrI(j))*tau;
+        k(ncrI(j)) = poissrnd(pAll(ncrI(j))*tau);
     end
     
     if (tauDPrime < tauPrime)
