@@ -9,7 +9,7 @@ clc;
 nu = [[-1 -1 1 0]', [1 1 -1 0]', [0 1 -1 1]'];
 %%%%%%%%%% Parameters and Initial Conditions %%%%%%%%% 
 nA = 6.023e23; % Avagadro?s number
-vol = 1e-17; % volume of system
+vol = 1e-15; % volume of system
 
 x = zeros(4,1);
 x(1) = round(5e-7*nA*vol); % molecules of substrate
