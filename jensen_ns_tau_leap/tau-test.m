@@ -4,34 +4,28 @@
 % Tau Test
 
 
-
-%% Problem 1.a
-clc;
-propensityFunction = @(x) .5*x(1);
-
-x0 = 100;
-tFinal = 15;
-nu = -1;
-
-[T, Y] = tau(x0, propensityFunction, nu, tFinal);
-
 %%
 clc;
 
 nu = [[-1 1]', [1 -1]'];
+g = [1 1]';
 
-x0 = [100, 0]';
-tFinal = 50;
-step = .01;
+x0 = [300, 0]';
+tFinal = 5;
+
 tic;
-[T, P] = tau(x0,@A2,nu,tFinal,step);
+[T, P] = tau(x0, @A2, nu, tFinal, g);
 tauTime = toc;
 tic;
-[TS, PS] = ssa(x0,@A2,nu,tFinal);
+[TS, PS] = ssaOrig(x0,@A2,nu,tFinal);
 ssaTime = toc;
 
-fprintf('The time for tau was %g\n', tauTime);
-fprintf('The time for ssa was %g\n', ssaTime);
+
+fprintf('\nThe time for tau was %f\n', tauTime);
+fprintf('The time for ssa was %f\n', ssaTime);
+
+fprintf('\nNumber of Tau samples %f\n', length(T));
+fprintf('Number of SSA samples %f\n', length(TS));
 
 
 close all;
@@ -39,3 +33,10 @@ figure;
 plot(T, P(:,1), 'b-', T, P(:,2), 'r-');
 hold on;
 plot(TS, PS(:,1), 'c--', TS, PS(:,2), 'm--');
+legend('T1', 'T2', 'S1', 'S2');
+
+figure;
+plot(T(1:end-1), diff(T), 'b-');
+hold on;
+plot(TS(1:end-1), diff(TS), 'r-');
+legend('Tau stepsize vs time', 'SSA stepsize vs time');

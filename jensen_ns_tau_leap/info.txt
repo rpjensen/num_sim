@@ -1,0 +1,45 @@
+===== Slow Exam Question =====
+
+x = [1000, 0]
+c1 = 10
+c2 = 5
+Tau count - 348.000000
+SSA count - 4.000000
+Redraw Tau count - 0.000000
+
+The time for tau was 0.054198
+The time for ssa was 3.021646
+
+Number of Tau samples 754.000000
+Number of SSA samples 33837.000000
+
+-----------------------
+x = [300, 0]
+c1 = 10
+c2 = 5
+Tau count - 186.000000
+SSA count - 81.000000
+Redraw Tau count - 0.000000
+
+The time for tau was 0.359351
+The time for ssa was 0.512280
+
+Number of Tau samples 8310.000000
+Number of SSA samples 10041.000000
+
+-----------------------
+x = [100, 0]
+c1 = 10
+c2 = 5
+Tau count - 0.000000
+SSA count - 35.000000
+Redraw Tau count - 0.000000
+
+The time for tau was 0.158632
+The time for ssa was 0.174621
+
+Number of Tau samples 3464.000000
+Number of SSA samples 3330.000000
+
+
+===== Product substrate reaction =====

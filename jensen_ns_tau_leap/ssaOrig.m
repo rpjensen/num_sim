@@ -1,4 +1,4 @@
-function [ T, S ] = ssa( x0, propensityFunctions, nu, tCur, tFinal, maxSteps )
+function [ T, S ] = ssaOrig( x0, propensityFunctions, nu, tFinal )
 % - x0: a vector containing the initial (t=0) population X of the species
 % - propensityFunctions: a function handle (like ?f? in our ODE solvers) that
 %       takes a population X as input and returns a column vector of the
@@ -11,16 +11,15 @@ function [ T, S ] = ssa( x0, propensityFunctions, nu, tCur, tFinal, maxSteps )
 a = propensityFunctions;
 
 % Init times
-T = tCur;
+tCur = 0;
+T = 0;
 
 % Init populations
 x = x0;
 S = x0';
 
-step = 0;
-
 % Main loop
-while step < maxSteps && tCur < tFinal
+while tCur < tFinal
    
     p = a(x);
     p0 = sum(p);
@@ -53,14 +52,16 @@ while step < maxSteps && tCur < tFinal
         % Update output
         T = [T tCur];
         S = [S; x'];
-        step = step + 1;
     else
-        T = [T tFinal];
-        S = [S; x'];
         break;
     end
         
 end
+
+% Append the final position since no more decays have occured since the
+% loop ended
+T = [T tFinal]';
+S = [S; x'];
 
 end
 

@@ -8,7 +8,7 @@ nonCriticalIndexes = [];
 % For each reaction channel
 for j = 1:length(props)
     % If the propensity is less than zero
-    if (prop(j) < 0)
+    if (props(j) > 0)
         minL = Inf;
         % For each population
         for i = 1:length(x)
@@ -27,7 +27,6 @@ for j = 1:length(props)
         else
             nonCriticalIndexes = [nonCriticalIndexes; j];
         end
-        
     end
 
 end

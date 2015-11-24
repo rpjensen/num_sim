@@ -26,6 +26,11 @@ S = x0';
 
 skipToStep3 = false;
 
+%stats
+ssaCount = 0;
+tauCount = 0;
+redrawCount = 0;
+
 % Main loop
 while tCur < tFinal
     if ~skipToStep3
@@ -42,6 +47,10 @@ while tCur < tFinal
         end
         for i = 1:length(crI)
             pCR0 = pCR0 + pAll(crI(i));
+        end
+        
+        if (sum(pAll) < 0) 
+            break;
         end
 
         % ========= Step 2 =========
@@ -62,24 +71,32 @@ while tCur < tFinal
     skipToStep3 = false;
     
     if (tauPrime < sc/pNCR0)
-        [tSSA, sSSA] = ssa( x0, propensityFunctions, nu, tCur, tFinal, ssaSteps )
-        T = [T; tSSA];
+        [tSSA, sSSA] = ssa( x, propensityFunctions, nu, tCur, tFinal, ssaSteps );
+        T = [T tSSA];
         S = [S; sSSA];
         tCur = T(end);
+        x = S(end,:)';
+        
+        ssaCount = ssaCount + 1;
         continue;
     end
     
     % ========= Step 4 =========
     % Calculate the prop sum of crit reactions and find time to next crit
     % reaction
-    tauDPrime = exprnd(1/ pCR0);
+    if isempty(crI)
+        tauDPrime = Inf;
+    else
+        tauDPrime = exprnd(1/ pCR0);
+    end
+    
     
     % ========= Step 5 =========
     % Calculate the change in each population with the assumption that zero
     % or one crit reaction will occur each tau
     tau = min(tauPrime, tauDPrime);
     
-    k = zeros(length(pAll));
+    k = zeros(length(pAll), 1);
     for j = 1:length(ncrI)
         k(ncrI(j)) = pAll(ncrI(j))*tau;
     end
@@ -107,7 +124,7 @@ while tCur < tFinal
     xNew = x;
     
     for j = 1:length(pAll)
-        xNew = xNew + k(j)*nu(j);
+        xNew = xNew + k(j)*nu(:,j);
     end
     
     if min(xNew) > 0
@@ -116,11 +133,13 @@ while tCur < tFinal
         x = xNew;
         T = [T tCur];
         S = [S; x'];
+        tauCount = tauCount + 1;
     
     else
         % Go to step (3) bad draw at the Poisson Dist
         tauPrime = tauPrime / 2;
         skipToStep3 = true;
+        redrawCount = redrawCount + 1;
     end
 
         
@@ -130,6 +149,10 @@ end
 % loop ended
 T = [T tFinal]';
 S = [S; x'];
+
+fprintf('Tau count - %f\n', tauCount);
+fprintf('SSA count - %f\n', ssaCount);
+fprintf('Redraw Tau count - %f\n', redrawCount);
 
 end
 
