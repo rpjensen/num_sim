@@ -3,29 +3,29 @@
 x = [1000, 0]
 c1 = 10
 c2 = 5
-Tau count - 348.000000
-SSA count - 4.000000
+Tau count - 355.000000
+SSA count - 3.000000
 Redraw Tau count - 0.000000
 
-The time for tau was 0.054198
-The time for ssa was 3.021646
+The time for tau was 0.198356
+The time for ssa was 2.611364
 
-Number of Tau samples 754.000000
-Number of SSA samples 33837.000000
+Number of Tau samples 660.000000
+Number of SSA samples 33548.000000
 
 -----------------------
 x = [300, 0]
 c1 = 10
 c2 = 5
-Tau count - 186.000000
-SSA count - 81.000000
+Tau count - 149.000000
+SSA count - 85.000000
 Redraw Tau count - 0.000000
 
-The time for tau was 0.359351
-The time for ssa was 0.512280
+The time for tau was 0.401585
+The time for ssa was 0.497322
 
-Number of Tau samples 8310.000000
-Number of SSA samples 10041.000000
+Number of Tau samples 8736.000000
+Number of SSA samples 10044.000000
 
 -----------------------
 x = [100, 0]
@@ -35,11 +35,51 @@ Tau count - 0.000000
 SSA count - 35.000000
 Redraw Tau count - 0.000000
 
-The time for tau was 0.158632
-The time for ssa was 0.174621
+The time for tau was 0.170378
+The time for ssa was 0.154842
 
-Number of Tau samples 3464.000000
-Number of SSA samples 3330.000000
+Number of Tau samples 3477.000000
+Number of SSA samples 3375.000000
 
 
 ===== Product substrate reaction =====
+Vol = 10^-13
+X = [30115, 12046, 0, 0]
+
+Tau count - 520.000000
+SSA count - 5.000000
+Redraw Tau count - 1.000000
+
+The time for tau was 0.306845
+The time for ssa was 20.659289
+
+Number of Tau samples 1027.000000
+Number of SSA samples 58470.000000
+
+
+-----------------------
+Vol = 10^-14
+X = [3012, 1205, 0, 0]
+Tau count - 215.000000
+SSA count - 15.000000
+Redraw Tau count - 0.000000
+
+The time for tau was 0.171413
+The time for ssa was 0.333713
+
+Number of Tau samples 1689.000000
+Number of SSA samples 5860.000000
+
+
+-----------------------
+Vol = 10^-15
+X = [301, 120, 0, 0]
+Tau count - 0.000000
+SSA count - 6.000000
+Redraw Tau count - 0.000000
+
+The time for tau was 0.038698
+The time for ssa was 0.038203
+
+Number of Tau samples 578.000000
+Number of SSA samples 590.000000

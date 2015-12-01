@@ -6,6 +6,7 @@ function [ T, S ] = tau( x0, propensityFunctions, nu, tFinal, g )
 % - nu: the stoichiometric matrix, where the ith column is the stoichiometric
 %       vector for reaction Ri.
 % - tFinal: the simulation time (assuming t=0 is the initial time)
+% - g: The HOR vector indexed accross the populations
 % Parameters
 e = .03;
 nc = 10;
@@ -150,9 +151,9 @@ end
 T = [T tFinal]';
 S = [S; x'];
 
-fprintf('Tau count - %f\n', tauCount);
-fprintf('SSA count - %f\n', ssaCount);
-fprintf('Redraw Tau count - %f\n', redrawCount);
+% fprintf('Tau count - %f\n', tauCount);
+% fprintf('SSA count - %f\n', ssaCount);
+% fprintf('Redraw Tau count - %f\n', redrawCount);
 
 end
 
